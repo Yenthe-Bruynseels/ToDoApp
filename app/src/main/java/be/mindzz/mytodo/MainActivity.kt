@@ -2,6 +2,7 @@ package be.mindzz.mytodo
 
 import android.os.Bundle
 import android.widget.EditText
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +20,12 @@ class MainActivity : AppCompatActivity() {
         val todoList = mutableListOf<ToDo>()
 
         // Create the adapter
-        val todoAdapter = ToDoAdapter(todoList)
+        val todoAdapter = ToDoAdapter(todoList) {
+            // Callback
+            if (todoList.isNotEmpty() && todoList.all {it.isChecked}) {
+                Toast.makeText(this, "All To do's completed. Apps will be unlocked!", Toast.LENGTH_LONG).show()
+            }
+        }
 
         // Set the adapter on the RecyclerView
         rvTodoItems.adapter = todoAdapter
