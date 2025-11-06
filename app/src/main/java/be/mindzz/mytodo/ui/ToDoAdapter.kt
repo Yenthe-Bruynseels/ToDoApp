@@ -9,7 +9,9 @@ import androidx.recyclerview.widget.RecyclerView
 import be.mindzz.mytodo.R
 import be.mindzz.mytodo.data.ToDo
 
-class ToDoAdapter(private val toDoList: MutableList<ToDo>) : RecyclerView.Adapter<ToDoAdapter.TodoViewHolder>() {
+class ToDoAdapter(
+    private val toDoList: MutableList<ToDo>,
+    private val onItemToggled: () -> Unit) : RecyclerView.Adapter<ToDoAdapter.TodoViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TodoViewHolder {
         // I need a new view to display an item. Please create one for me.
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_todo, parent, false)
@@ -26,6 +28,7 @@ class ToDoAdapter(private val toDoList: MutableList<ToDo>) : RecyclerView.Adapte
 
         holder.checkedCheckBox.setOnCheckedChangeListener { _, isChecked ->
             currentTodo.isChecked = isChecked
+            onItemToggled()
         }
     }
 
